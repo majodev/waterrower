@@ -58,17 +58,20 @@ export class WaterRower extends events.EventEmitter {
 
     private discoverPort(callback) {
         SerialPort.list((err, ports) => {
-            let p = _.find(ports, p => p.manufacturer === 'Microchip Technology, Inc.');
+            let p = _.find(ports, p => _.includes([
+                'Microchip Technology, Inc.', // Linux?
+                'Microchip Technology Inc.' // macOS
+            ], p.manufacturer));
             if (p) callback(p.comName);
             else callback();
         });
     }
 
-    private setupSerialPort(options) {
+    private setupSerialPort(options: WaterRowerOptions) {
         // setup the serial port
         this.port = new SerialPort(options.portName, {
-            baudrate: options.baudRate || this.baudRate,
-            disconnectedCallback: function () { console.log('disconnected'); },
+            baudRate: options.baudRate || this.baudRate,
+            // disconnectedCallback: function () { console.log('disconnected'); },
             parser: SerialPort.parsers.readline("\n")
         });
 

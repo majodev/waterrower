@@ -35,6 +35,9 @@
     "serialport": "^4"
   },
   "devDependencies": {
-    "typescript": "^1.8.10"
+    "@types/mocha": "^2.2.41",
+    "chai": "^3.5.0",
+    "mocha": "^3.3.0",
+    "typescript": "^2.2.2"
   }
 }
